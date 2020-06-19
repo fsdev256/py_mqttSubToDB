@@ -1,0 +1,11 @@
+{
+    "server" : "127.0.0.1",
+    "port" : 1883,
+    "keep_alive" : 60,
+    "clean_session" : true,
+    "client_id" : "client_id",
+    "username" : "username",
+    "password" : "password",
+    "qos" : 1,
+    "subscribe_topics": ["topic/test01", "topic/test02"]
+}

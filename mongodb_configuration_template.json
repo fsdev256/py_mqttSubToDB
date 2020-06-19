@@ -1,0 +1,6 @@
+{
+    "url" : "mongodb://{0}:{1}@<cluster_url>/{2}?ssl=<ssl and following path>",
+    "username" : "username",
+    "password" : "password",
+    "dbname" : "dbname"
+}

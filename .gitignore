@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# User defined 
+# vs code
+.vscode/*
+
+# Configuration files
+mongodb_configuration.json
+mqtt_configuration.json
