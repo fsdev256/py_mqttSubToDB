@@ -1,7 +1,7 @@
 # py_mqttSubToDB
 MQTT Subscribe and Insert To MongoDB in Python 
 
-Topic: "topic/test"
+Topic: "topic/db/collection"
 Payload: 
 {
     "device_id": "test_sensor",

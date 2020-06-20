@@ -21,10 +21,12 @@ class MessageProcessor:
         print("msg.data.topic = {0}".format(msg.data.topic))
         print("msg.data.payload = {0}".format(msg.data.payload))
         print('-----------------------------------------------------------------')
-        # print("json_data = {0}".format(json_data))
-        self.insert_data(msg.timestamp, json_data)
+        topic_split = msg.data.topic.split('/')
+        db = topic_split[-2]
+        collection = topic_split[-1]
+        self.insert_data(db, collection, msg.timestamp, json_data)
     
-    def insert_data(self, timestamp, json_data):
+    def insert_data(self, db, collection, timestamp, json_data):
         filter_data = {
             'device_id' : json_data['device_id'],
             'sensor' : json_data['sensor'],
@@ -41,20 +43,14 @@ class MessageProcessor:
             '$setOnInsert' : filter_data
         }
         try:
-            result=self.db.testsensor.update(
+            result=self.dbClient[db][collection].update(
                 filter_data, 
                 update_data, 
                 upsert = True
             )
+            print(result)
         except Exception as err:
             print("Database Exception error: {0}".format(err))
-    
-    def db_insert_one(self):
-        pass
-
-    def db_find_one(self):
-        query = self.db.reviews.find_one()
-        print(query)
     
     def get_msg_queue_size(self):
         return len(self.msg_queue)

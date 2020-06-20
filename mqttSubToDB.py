@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os 
 import paho.mqtt.client as mqtt
 from time import sleep
 from datetime import datetime
@@ -10,12 +11,15 @@ from random import randint
 # seed random number generator
 seed(1)
 
+# Get current working directory
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 # Read MQTT configuration from json_file
-with open('mqtt_configuration.json') as json_file:
+with open(dir_path + '/' + 'mqtt_configuration.json') as json_file:
     mqtt_config = json.load(json_file)
 
 # Read DB configuration from json_file
-with open('mongodb_configuration.json') as json_file:
+with open(dir_path + '/' + 'mongodb_configuration.json') as json_file:
     db_config = json.load(json_file)
 
 def mqtt_on_log(client, userdata, level, rc):
@@ -43,8 +47,7 @@ def mqtt_on_disconnect(client, userdata, rc):
 
 def mqtt_init(data):
     client = mqtt.Client(mqtt_config['client_id']+"_"+str(randint(0, 24576)), clean_session=mqtt_config['clean_session'], userdata=data)
-    # TODO: Implement username and password
-    # client.username_pw_set(mqtt_config['username'], password=mqtt_config['password'])
+    client.username_pw_set(mqtt_config['username'], password=mqtt_config['password'])
     client.connect(mqtt_config['server'], mqtt_config['port'], mqtt_config['keep_alive'])
     client.on_connect = mqtt_on_connect
     client.on_disconnect = mqtt_on_disconnect
